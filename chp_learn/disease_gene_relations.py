@@ -1,5 +1,7 @@
 import math
 
+from trapi_model.biolink.constants import *
+
 def get_prior_from_dsi(dsi):
     return 2**(dsi * math.log(1/30170, 2))
 
@@ -31,7 +33,10 @@ def get_disease_gene_weights(target, updates, dgs):
     weights = {}
     for comp, state_dict in updates.items():
         for state, prob in state_dict.items():
-            weights[state] = math.log(prob) + math.log(get_prior_from_dsi(dsi))
+            try:
+                weights[state] = math.log(prob) + math.log(get_prior_from_dsi(dsi))
+            except ValueError:
+                continue
     # Parse up, normal, down regulation expression
     new_weights = {}
     states = []
@@ -41,14 +46,16 @@ def get_disease_gene_weights(target, updates, dgs):
     for i, (_, state) in enumerate(sorted(states, key=lambda x: x[0])):
         if len(states) == 2:
             if i == 0:
-                new_weights['DOWN_REG'] = weights[state]
+                new_weights[BIOLINK_DECREASES_EXPRESSION_OF_ENTITY.get_curie()] = weights[state]
             else:
-                new_weights['UP_REG'] = weights[state]
+                new_weights[BIOLINK_INCREASES_EXPRESSION_OF_ENTITY.get_curie()] = weights[state]
         elif len(states) == 3:
             if i == 0:
-                new_weights['DOWN_REG'] = weights[state]
+                new_weights[BIOLINK_DECREASES_EXPRESSION_OF_ENTITY.get_curie()] = weights[state]
             elif i == 2:
-                new_weights['NO_REG'] = weights[state]
+                # There is no regulation 
+                # new_weights['NO_REG'] = weights[state]
+                continue
             else:
-                new_weights['UP_REG'] = weights[state]
+                new_weights[BIOLINK_INCREASES_EXPRESSION_OF_ENTITY.get_curie()] = weights[state]
     return new_weights
