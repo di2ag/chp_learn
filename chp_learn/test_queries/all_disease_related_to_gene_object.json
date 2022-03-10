@@ -1,0 +1,21 @@
+{
+  "message": {
+    "query_graph": {
+      "edges": {
+        "e01": {
+          "subject": "n0",
+          "object": "n1",
+          "predicates":["biolink:related_to"]
+        }
+      },
+      "nodes": {
+        "n0": {
+          "categories": ["biolink:Disease"]
+                },
+        "n1": {
+          "ids": ["ENSEMBL:ENSG00000118058"]
+        }
+      }
+    }
+  }
+ }

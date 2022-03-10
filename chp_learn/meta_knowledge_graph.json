@@ -1,0 +1,61 @@
+{
+  "nodes": {
+    "biolink:Gene": {
+      "id_prefixes": [
+        "ENSEMBL",
+        "NCBIGene",
+        "HGNC"
+      ]
+    },
+    "biolink:Disease": {
+      "id_prefixes": [
+        "UMLS",
+        "MONDO",
+        "DOID",
+        "NCIT"
+      ]
+    }
+  },
+  "edges": [
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Gene",
+      "predicate": "biolink:increases_expression_of"
+    },
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Gene",
+      "predicate": "biolink:decreases_expression_of"
+    },
+    {
+      "subject": "biolink:Disease",
+      "object": "biolink:Gene",
+      "predicate": "biolink:increases_expression_of"
+    },
+    {
+      "subject": "biolink:Disease",
+      "object": "biolink:Gene",
+      "predicate": "biolink:decreases_expression_of"
+    },
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Gene",
+      "predicate": "biolink:expression_increased_by"
+    },
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Gene",
+      "predicate": "biolink:expression_decreased_by"
+    },
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Disease",
+      "predicate": "biolink:expression_increased_by"
+    },
+    {
+      "subject": "biolink:Gene",
+      "object": "biolink:Disease",
+      "predicate": "biolink:expression_decreased_by"
+    }
+  ]
+}

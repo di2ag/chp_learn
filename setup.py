@@ -24,6 +24,15 @@ setup(
     author_email='chase.th@dartmouth.edu',
     description='Learned relationships database for the Connections Hypothesis Provider',
     packages=find_packages(),
+    data_files=[
+        ('chp_learn',
+            [
+                'chp_learn/curies_database.json',
+                'chp_learn/meta_knowledge_graph.json',
+                ]
+            )
+        ],
     install_requires=REQUIRED_PACKAGES,
     python_requires='>=3.8',
+    zip_safe=True,
 )
