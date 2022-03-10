@@ -388,6 +388,9 @@ class TrapiInterface:
     def get_curies(self) -> CurieDatabase:
         self._get_curies()
         return self.curies_db
+
+    def get_name(self) -> str:
+        return 'chp_learn'
     
     def _get_conflation_map(self) -> ConflationMap:
         # There is currently no conflation map for this app
