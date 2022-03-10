@@ -1,20 +1,13 @@
-from django.db.models import Q
-from django.core.exceptions import ObjectDoesNotExist
-from enum import Enum
-from collections import defaultdict
 import os
-
+import pkg_resources
+import json
+from django.db.models import Q
+from collections import defaultdict
 
 from trapi_model.logger import Logger as TrapiLogger
-from trapi_model.message import Message
-from trapi_model.query_graph import QEdge, QueryGraph
 from trapi_model.biolink.constants import *
-from trapi_model.query_graph import QNode
-from trapi_model.query import Query
 from trapi_model.meta_knowledge_graph import MetaKnowledgeGraph
-from trapi_model.knowledge_graph import KEdge, KnowledgeGraph
 from trapi_model.results import Result, Results, Binding
-from trapi_model.message import Message
 from chp_utils.curie_database import CurieDatabase
 from chp_utils.conflation import ConflationMap
 
@@ -22,6 +15,16 @@ from .trapi_exceptions import *
 from .models import Gene, Disease, GeneToFillGeneResult, DiseaseToFillGeneResult
 
 MODULE_PATH = os.path.dirname(os.path.abspath(__file__))
+
+def read_json_datafile(relpath):
+    abspath = os.path.join(MODULE_PATH, relpath)
+    # If the path exists just load it
+    if os.path.exists(abspath):
+        with open(abspath, 'r') as datafile:
+            return json.load(datafile)
+    # Else try to load from package resources
+    json_string = pkg_resources.resource_stream(__name__, relpath).read().decode()
+    return json.loads(json_string)
 
 class TrapiInterface:
     def __init__(self,
@@ -371,19 +374,19 @@ class TrapiInterface:
         """
         Returns the meta knowledge graph for this app
         """
-        meta_kg_file = os.path.join(MODULE_PATH, 'meta_knowledge_graph.json')
+        metakg_dict = read_json_datafile('meta_knowledge_graph.json')
         return MetaKnowledgeGraph.load(
             self.trapi_version,
             None,
-            filename=meta_kg_file,
+            meta_knowledge_graph=metakg_dict,
         )
 
     def get_meta_knowledge_graph(self) -> MetaKnowledgeGraph:
         return self.meta_knowledge_graph
 
     def _get_curies(self) -> CurieDatabase:
-        curies_db_file = os.path.join(MODULE_PATH, 'curies_database.json')
-        self.curies_db = CurieDatabase(curies_filename=curies_db_file)
+        curies_dict = read_json_datafile('curies_database.json')
+        self.curies_db = CurieDatabase(curies=curies_dict)
 
     def get_curies(self) -> CurieDatabase:
         self._get_curies()
