@@ -15,7 +15,7 @@ genes = ['ENSEMBL','NCBIGene','HGNC']
 metakg.add_node(BIOLINK_GENE_ENTITY, genes)
 
 # Add preferred disease prefixes
-diseases = ['MONDO','DOID','UMLS','NCIT']
+diseases = ['UMLS','DOID','MONDO','NCIT']
 metakg.add_node(BIOLINK_DISEASE_ENTITY, diseases)
 
 ## Add Edges
