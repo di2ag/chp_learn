@@ -17,6 +17,7 @@ REQUIRED_PACKAGES = [
         'pandas',
 ]
 
+# data_files property is used for normal install and package_data is used for wheel installs
 setup(
     name='chp_learn',
     version=__version__,
@@ -25,13 +26,14 @@ setup(
     description='Learned relationships database for the Connections Hypothesis Provider',
     packages=find_packages(),
     data_files=[
-        ('chp_learn',
+        ('',
             [
                 'chp_learn/curies_database.json',
                 'chp_learn/meta_knowledge_graph.json',
                 ]
             )
         ],
+    package_data={'chp_learn': ['curies_database.json', 'meta_knowledge_graph.json']},
     install_requires=REQUIRED_PACKAGES,
     python_requires='>=3.8',
     zip_safe=True,
