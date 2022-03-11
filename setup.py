@@ -25,7 +25,7 @@ setup(
     description='Learned relationships database for the Connections Hypothesis Provider',
     packages=find_packages(),
     data_files=[
-        ('',
+        ('chp_learn',
             [
                 'chp_learn/curies_database.json',
                 'chp_learn/meta_knowledge_graph.json',
