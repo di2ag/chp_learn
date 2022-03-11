@@ -9,9 +9,9 @@
     },
     "biolink:Disease": {
       "id_prefixes": [
+        "UMLS",
         "MONDO",
         "DOID",
-        "UMLS",
         "NCIT"
       ]
     }
