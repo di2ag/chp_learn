@@ -103,5 +103,5 @@ def run():
             fg, fg_created = Gene.objects.get_or_create(curie=fill_gene)
             fg.save()
             for relation, weight in weights_dict.items():
-                g2d_res = DiseaseToFillGeneResult(fill_gene=fg, weight=weight, query_disease=d, relation=relation)
+                g2d_res = DiseaseToFillGeneResult(fill_gene=fg, weight=weight, query_disease=d, predicate=relation)
                 g2d_res.save()
